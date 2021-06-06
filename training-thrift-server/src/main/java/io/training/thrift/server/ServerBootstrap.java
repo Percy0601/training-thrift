@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ServerBootstrap {
-    static Logger log = LoggerFactory.getLogger(ServerBootstrap.class);
+
     public static void main(String[] args) {
         try {
             System.out.println("服务端开启....");
@@ -24,7 +24,7 @@ public class ServerBootstrap {
             TServer server = new TSimpleServer(tArgs);
             server.serve();
         }catch (TTransportException e) {
-            log.warn("server start error:{}", e.getMessage(), e);
+            System.out.println("server start error:{}" +  e.getMessage(),);
         }
     }
 }
