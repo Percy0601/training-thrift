@@ -71,7 +71,7 @@
                     <skip>false</skip>
                     <imageName>example</imageName>
                     <buildArgs>
-                        --no-fallback
+                        --no-fallback --allow-incomplete-classpath
                     </buildArgs>
                 </configuration>
             </plugin>
