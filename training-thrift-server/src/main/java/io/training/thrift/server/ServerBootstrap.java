@@ -24,7 +24,7 @@ public class ServerBootstrap {
             TServer server = new TSimpleServer(tArgs);
             server.serve();
         }catch (TTransportException e) {
-            System.out.println("server start error:{}" +  e.getMessage(),);
+            System.out.println("server start error:{}" +  e.getMessage());
         }
     }
 }
