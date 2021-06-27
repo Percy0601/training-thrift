@@ -24,6 +24,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <log4j2.version>2.13.3</log4j2.version>
+    <lombok.version>1.18.4</lombok.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
@@ -70,7 +71,7 @@
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.18.4</version>
+        <version>${lombok.version}</version>
         <scope>provided</scope>
       </dependency>
     </dependencies>
