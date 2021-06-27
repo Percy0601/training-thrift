@@ -86,7 +86,7 @@
                     <skip>false</skip>
                     <imageName>example</imageName>
                     <buildArgs>
-                        --no-fallback --allow-incomplete-classpath -J-Xmx128m
+                        --no-fallback --allow-incomplete-classpath
                     </buildArgs>
                 </configuration>
             </plugin>
