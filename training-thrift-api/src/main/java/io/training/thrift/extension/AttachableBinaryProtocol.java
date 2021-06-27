@@ -1,5 +1,6 @@
 package io.training.thrift.extension;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TApplicationException;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.*;
@@ -10,7 +11,9 @@ import java.io.BufferedInputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+@Slf4j
 public class AttachableBinaryProtocol extends TBinaryProtocol {
     private static final long NO_LENGTH_LIMIT = -1;
     private Map<String, String> attachment;
@@ -69,7 +72,12 @@ public class AttachableBinaryProtocol extends TBinaryProtocol {
 
     public void writeMessageBegin(TMessage message) throws TException {
         super.writeMessageBegin(message);
-
+        Random r = new Random();
+        attachment.put("appId", "15");
+        attachment.put("appName", "training-thrift");
+        attachment.put("traceId", String.valueOf(r.nextInt(10000)));
+        attachment.put("spanId", String.valueOf(r.nextInt(100)));
+        log.info("模拟隐式传参：{}", attachment);
         if(attachment.size() > 0){
             writeFieldZero();
         }
@@ -151,16 +159,21 @@ public class AttachableBinaryProtocol extends TBinaryProtocol {
 
     @Override
     public TMessage readMessageBegin() throws TException {
-        System.out.println("============");
+        markTFramedTransport(this);
         TMessage tMessage = super.readMessageBegin();
+        readFieldZero();
 
-        if (tMessage.type == TMessageType.EXCEPTION) {
-            TApplicationException x = TApplicationException.read(this);
-//            TraceUtils.submitAdditionalAnnotation(Constants.TRACE_THRIFT_EXCEPTION, StringUtil.trimNewlineSymbolAndRemoveExtraSpace(x.getMessage()));
-//            TraceUtils.endAndSendLocalTracer();
-        } else if (tMessage.type == TMessageType.REPLY) {
-//            TraceUtils.endAndSendLocalTracer();
-        }
+//        if (tMessage.type == TMessageType.EXCEPTION) {
+//            TApplicationException x = TApplicationException.read(this);
+////            TraceUtils.submitAdditionalAnnotation(Constants.TRACE_THRIFT_EXCEPTION, StringUtil.trimNewlineSymbolAndRemoveExtraSpace(x.getMessage()));
+////            TraceUtils.endAndSendLocalTracer();
+//        } else if (tMessage.type == TMessageType.REPLY) {
+////            TraceUtils.endAndSendLocalTracer();
+//        }
+        resetTFramedTransport(this);
+        tMessage = super.readMessageBegin();
+        log.info("==============attachment:{}", attachment);
+
         return tMessage;
     }
 

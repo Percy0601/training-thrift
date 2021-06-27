@@ -1,5 +1,6 @@
 package io.training.thrift.extension;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TMessage;
@@ -7,6 +8,7 @@ import org.apache.thrift.protocol.TProtocol;
 
 import java.util.Map;
 
+@Slf4j
 public class AttachableProcessor implements TProcessor {
     private TProcessor realProcessor;
     public AttachableProcessor(TProcessor realProcessor) {
@@ -21,7 +23,7 @@ public class AttachableProcessor implements TProcessor {
             TMessage tMessage = serverProtocol.readMessageBegin();
             serverProtocol.readFieldZero();
             Map<String, String> headInfo = serverProtocol.getAttachment();
-
+            log.info("读取到的隐式参数:{}", headInfo);
 //            String traceId = headInfo.get(TRACE_ID.getValue());
 //            String parentSpanId = headInfo.get(PARENT_SPAN_ID.getValue());
 //            String isSampled = headInfo.get(IS_SAMPLED.getValue());
