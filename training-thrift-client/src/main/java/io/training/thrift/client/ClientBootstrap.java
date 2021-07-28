@@ -11,6 +11,10 @@ import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class ClientBootstrap {
     private static Logger log = LoggerFactory.getLogger(ClientBootstrap.class);
     public static void main(String[] args) {
@@ -50,6 +54,17 @@ public class ClientBootstrap {
             transport.open();
             String result = client.echo("哈哈");
             System.out.println(result);
+
+            List<String> msgList = new ArrayList<>();
+            for(int i = 0; i < 100000; i++) {
+                msgList.add(UUID.randomUUID().toString());
+            }
+            for(int i = 0; i < 100000; i++) {
+                result = client.echo(msgList.get(i));
+                if(!result.equals("Hello " + msgList.get(i))) {
+                    System.out.println("不相同：" + msgList.get(i));
+                }
+            }
         } catch (TTransportException e) {
             e.printStackTrace();
         } catch (TException e) {

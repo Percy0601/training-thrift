@@ -11,6 +11,11 @@ import java.util.Random;
 
 @Slf4j
 public class SomeServiceImpl implements SomeService.Iface {
+
+    public SomeServiceImpl() {
+        log.info("##############1111");
+    }
+
     @Override
     public String echo(String msg) throws TException {
         return "Hello " + msg;
