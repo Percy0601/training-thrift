@@ -87,7 +87,8 @@ public class ClientBootstrap {
             String[] ipAndPort = addr.split(":");
             TSocket tsocket = new TSocket(ipAndPort[0], Integer.valueOf(ipAndPort[1]));
             transport = new TFramedTransport(tsocket);
-            TProtocol protocol = new TBinaryProtocol(transport);
+            TProtocol protocol = new AttachableBinaryProtocol(transport);
+            //TProtocol protocol = new TBinaryProtocol(transport);
 
             TMultiplexedProtocol multiplexedProtocol = new TMultiplexedProtocol(protocol, SomeService.class.getName() + "$");
             SomeService.Client client = new SomeService.Client(multiplexedProtocol);
