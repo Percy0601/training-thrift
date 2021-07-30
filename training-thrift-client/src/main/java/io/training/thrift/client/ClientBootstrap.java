@@ -2,6 +2,7 @@ package io.training.thrift.client;
 
 import io.training.thrift.api.SomeService;
 import io.training.thrift.extension.AttachableBinaryProtocol;
+import io.training.thrift.extension.TTraceClientProtocol;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TMultiplexedProtocol;
@@ -85,14 +86,14 @@ public class ClientBootstrap {
         try {
             String addr = "localhost:8761";
             String[] ipAndPort = addr.split(":");
-            TSocket tsocket = new TSocket(ipAndPort[0], Integer.valueOf(ipAndPort[1]));
+            TTransport tsocket = new TSocket(ipAndPort[0], Integer.valueOf(ipAndPort[1]));
             transport = new TFramedTransport(tsocket);
-            TProtocol protocol = new AttachableBinaryProtocol(transport);
-            //TProtocol protocol = new TBinaryProtocol(transport);
-
+            TProtocol protocol = new TTraceClientProtocol(transport);
+//            TProtocol protocol = new TBinaryProtocol(transport);
+            //io.training.thrift.api.SomeService$
             TMultiplexedProtocol multiplexedProtocol = new TMultiplexedProtocol(protocol, SomeService.class.getName() + "$");
             SomeService.Client client = new SomeService.Client(multiplexedProtocol);
-            transport.open();
+            tsocket.open();
             for(int i = 0; i < 10000; i++) {
                 String hello = client.echo("kdfasdf" + i);
                 System.out.println("======" + hello);
