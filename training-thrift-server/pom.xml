@@ -74,21 +74,21 @@
                 <groupId>org.graalvm.nativeimage</groupId>
                 <artifactId>native-image-maven-plugin</artifactId>
                 <version>${graalvm.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>native-image</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>false</skip>
-                    <imageName>example</imageName>
-                    <buildArgs>
-                        --no-fallback --allow-incomplete-classpath
-                    </buildArgs>
-                </configuration>
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>native-image</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>package</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <skip>false</skip>-->
+<!--                    <imageName>example</imageName>-->
+<!--                    <buildArgs>-->
+<!--                        &#45;&#45;no-fallback &#45;&#45;allow-incomplete-classpath-->
+<!--                    </buildArgs>-->
+<!--                </configuration>-->
             </plugin>
         </plugins>
     </build>
